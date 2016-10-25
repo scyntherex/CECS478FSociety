@@ -1,0 +1,5 @@
+On branch master
+Untracked files:
+	git.txt
+
+nothing added to commit but untracked files present
