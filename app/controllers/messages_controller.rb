@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   end
 
   def index
-    #@messages = @conversation.messages
+    @messages = @conversation.messages
     #if @messages.length > 10
      # @over_ten = true
       #@messages = @messages[-10..-1]
@@ -19,8 +19,9 @@ class MessagesController < ApplicationController
         @messages.last.read = true;
       end
     end
+    render json:@messages.pluck(:body)
 
-    @message = @conversation.messages.new
+    #@message = @conversation.messages.new
   end
 
   def new
