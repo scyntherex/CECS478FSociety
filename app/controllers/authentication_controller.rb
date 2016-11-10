@@ -9,11 +9,11 @@ class AuthenticationController < ApplicationController
   end
 
   def register_user
-    user = User.create(email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
+    user = User.create(email: params[:email], password: params[:password])
     if user.id == nil
-      render json: {errors: ['Info missing or User exists']}, status: :unauthorized
+      render json: {errors: ['Missing Info or User exists']}, status: :unauthorized
     else
-      render json: "{user created}"
+      render json: '{user created}'
     end
   end
   
