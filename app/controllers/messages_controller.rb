@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_request!
   before_action do
     @conversation = Conversation.find(params[:conversation_id])
   end
@@ -27,9 +28,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = @conversation.messages.new(message_params)
+    @message = @conversation.messages.new(user_id: current_user.id, body: params[:body], conversation_id: params[:conversation_id])
     if @message.save
-      redirect_to conversation_messages_path(@conversation)
+      #redirect_to conversation_messages_path(@conversation)
+      render json: "{message created}"
     end
   end
 
