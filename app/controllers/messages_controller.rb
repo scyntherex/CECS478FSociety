@@ -1,10 +1,11 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_request!
   before_action do
     @conversation = Conversation.find(params[:conversation_id])
   end
 
   def index
-    #@messages = @conversation.messages
+    @messages = @conversation.messages
     #if @messages.length > 10
      # @over_ten = true
       #@messages = @messages[-10..-1]
@@ -18,8 +19,9 @@ class MessagesController < ApplicationController
         @messages.last.read = true;
       end
     end
+    render json:@messages.pluck(:body)
 
-    @message = @conversation.messages.new
+    #@message = @conversation.messages.new
   end
 
   def new
@@ -27,9 +29,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = @conversation.messages.new(message_params)
+    @message = @conversation.messages.new(user_id: current_user.id, body: params[:body], conversation_id: params[:conversation_id])
     if @message.save
-      redirect_to conversation_messages_path(@conversation)
+      #redirect_to conversation_messages_path(@conversation)
+      render json: "{message created}"
     end
   end
 
