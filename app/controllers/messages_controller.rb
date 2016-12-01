@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
         @messages.last.read = true;
       end
     end
-    render json:@messages.pluck(:body)
+    render json: @messages
 
     #@message = @conversation.messages.new
   end
