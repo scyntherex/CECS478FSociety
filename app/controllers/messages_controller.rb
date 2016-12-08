@@ -6,14 +6,7 @@ class MessagesController < ApplicationController
 
   def index
     @messages = @conversation.messages
-    #if @messages.length > 10
-     # @over_ten = true
-      #@messages = @messages[-10..-1]
-    #end
-    #if params[:m]
-     # @over_ten = false
-      #@messages = @conversation.messages
-    #end
+    
     if @messages.last
       if @messages.last.user_id != current_user.id
         @messages.last.read = true;
@@ -21,13 +14,11 @@ class MessagesController < ApplicationController
     end
     render json: @messages
 
-    #@message = @conversation.messages.new
   end
-
   def new
     @message = @conversation.messages.new
   end
-
+#create a message, if message is created a message will display indicating that the message was created
   def create
     @message = @conversation.messages.new(user_id: current_user.id, body: params[:body], conversation_id: params[:conversation_id])
     if @message.save
